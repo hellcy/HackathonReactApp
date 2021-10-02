@@ -14,7 +14,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
-    password: ""
+    password: "",
   });
 
   function validateForm() {
@@ -29,7 +29,7 @@ export default function Login() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
-      history.push("/");
+      history.push("/main");
     } catch (e) {
       onError(e);
       setIsLoading(false);
@@ -68,12 +68,14 @@ export default function Login() {
       </Form>
       <div className="GoogleLogin">
         <LoaderButton
-        block
-        size="lg"
-        type="submit"
-        isLoading={isLoading}
-        onClick={() => Auth.federatedSignIn( { provider: "Google"})}
-      >Login in with Google</LoaderButton>
+          block
+          size="lg"
+          type="submit"
+          isLoading={isLoading}
+          onClick={() => Auth.federatedSignIn({ provider: "Google" })}
+        >
+          Login in with Google
+        </LoaderButton>
       </div>
     </div>
   );

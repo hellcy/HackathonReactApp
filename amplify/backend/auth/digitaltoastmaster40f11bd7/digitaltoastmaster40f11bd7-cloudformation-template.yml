@@ -10,6 +10,18 @@ Parameters:
     Type: String
 
   
+  
+  
+  functiondigitaltoastmaster40f11bd7PostConfirmationArn:
+    Type: String
+    Default: functiondigitaltoastmaster40f11bd7PostConfirmationArn
+  
+  functiondigitaltoastmaster40f11bd7PostConfirmationName:
+    Type: String
+    Default: functiondigitaltoastmaster40f11bd7PostConfirmationName
+  
+  
+  
 
     
   identityPoolName:
@@ -122,6 +134,10 @@ Parameters:
   hostedUI:
     Type: String
             
+  triggers:
+    Type: String
+  
+            
   hostedUIDomainName:
     Type: String
   
@@ -134,22 +150,6 @@ Parameters:
     Type: String
   
             
-        
-  userPoolGroupList:
-    Type: CommaDelimitedList
-      
-  serviceName:
-    Type: String
-  
-            
-  
-  usernameCaseSensitive:
-    Type: String
-            
-        
-  dependsOn:
-    Type: CommaDelimitedList
-      
   hostedUIProviderCreds:
     Type: String
   
@@ -158,7 +158,39 @@ Parameters:
     Type: String
   
             
+        
+  userPoolGroupList:
+    Type: CommaDelimitedList
+      
             
+  serviceName:
+    Type: String
+  
+            
+  
+  usernameCaseSensitive:
+    Type: String
+            
+      
+  parentStack:
+    Type: String
+        
+  authTriggerConnections:
+    Type: String
+  
+            
+  
+  breakCircularDependency:
+    Type: String
+            
+        
+  permissions:
+    Type: CommaDelimitedList
+      
+        
+  dependsOn:
+    Type: CommaDelimitedList
+      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   
@@ -173,7 +205,7 @@ Resources:
   # Created to allow the UserPool SMS Config to publish via the Simple Notification Service during MFA Process
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, 'myapp385ff9f7_sns-role', !Join ['',[ 'sns', '385ff9f7', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'digita40f11bd7_sns-role', !Join ['',[ 'sns', '40f11bd7', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -185,10 +217,10 @@ Resources:
               - "sts:AssumeRole"
             Condition:
               StringEquals:
-                sts:ExternalId: myapp385ff9f7_role_external_id
+                sts:ExternalId: digita40f11bd7_role_external_id
       Policies:
         -
-          PolicyName: myapp385ff9f7-sns-policy
+          PolicyName: digita40f11bd7-sns-policy
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
@@ -214,6 +246,11 @@ Resources:
         
         -
           Name: email
+          Required: true
+          Mutable: true
+        
+        -
+          Name: name
           Required: true
           Mutable: true
         
@@ -243,7 +280,7 @@ Resources:
       SmsAuthenticationMessage: !Ref smsAuthenticationMessage
       SmsConfiguration:
         SnsCallerArn: !GetAtt SNSRole.Arn
-        ExternalId: myapp385ff9f7_role_external_id
+        ExternalId: digita40f11bd7_role_external_id
     
   
   UserPoolClientWeb:
@@ -251,7 +288,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: myapp385ff9f7_app_clientWeb
+      ClientName: digita40f11bd7_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -261,7 +298,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: myapp385ff9f7_app_client
+      ClientName: digita40f11bd7_app_client
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -272,7 +309,7 @@ Resources:
   # Created to execute Lambda which gets userpool app client config values
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', '385ff9f7', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', '40f11bd7', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -326,7 +363,7 @@ Resources:
   # Marked as depending on UserPoolClientRole for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: myapp385ff9f7_userpoolclient_lambda_iam_policy
+      PolicyName: digita40f11bd7_userpoolclient_lambda_iam_policy
       Roles:
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -343,7 +380,7 @@ Resources:
   # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: myapp385ff9f7_userpoolclient_lambda_log_policy
+      PolicyName: digita40f11bd7_userpoolclient_lambda_log_policy
       Roles:
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -753,7 +790,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties:
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'myapp385ff9f7_identitypool_385ff9f7', !Join ['',['myapp385ff9f7_identitypool_385ff9f7', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'digitaltoastmaster40f11bd7_identitypool_40f11bd7', !Join ['',['digitaltoastmaster40f11bd7_identitypool_40f11bd7', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

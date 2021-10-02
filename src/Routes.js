@@ -25,7 +25,7 @@ export default function Routes() {
       </AuthenticatedRoute>
       {/* Finally, catch all unmatched routes */}
       <Route>
-      <NotFound />
+        <NotFound />
       </Route>
     </Switch>
   );

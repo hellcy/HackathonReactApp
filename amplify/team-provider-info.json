@@ -1,19 +1,30 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-myapp-dev-145923-authRole",
-      "UnauthRoleArn": "arn:aws:iam::596107909461:role/amplify-myapp-dev-145923-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::596107909461:role/amplify-myapp-dev-145923-authRole",
+      "AuthRoleName": "amplify-digitaltoastmaster-dev-140929-authRole",
+      "UnauthRoleArn": "arn:aws:iam::571747411449:role/amplify-digitaltoastmaster-dev-140929-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::571747411449:role/amplify-digitaltoastmaster-dev-140929-authRole",
       "Region": "ap-southeast-2",
-      "DeploymentBucketName": "amplify-myapp-dev-145923-deployment",
-      "UnauthRoleName": "amplify-myapp-dev-145923-unauthRole",
-      "StackName": "amplify-myapp-dev-145923",
-      "StackId": "arn:aws:cloudformation:ap-southeast-2:596107909461:stack/amplify-myapp-dev-145923/b132b2d0-1f4f-11ec-ba5c-02366ddaec5c",
-      "AmplifyAppId": "d3os4rm0kuuvwa"
+      "DeploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+      "UnauthRoleName": "amplify-digitaltoastmaster-dev-140929-unauthRole",
+      "StackName": "amplify-digitaltoastmaster-dev-140929",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:571747411449:stack/amplify-digitaltoastmaster-dev-140929/8c66db80-2336-11ec-9e23-02bc9941746e",
+      "AmplifyAppId": "d2db0ry9iym3xw"
     },
     "categories": {
+      "function": {
+        "digitaltoastmaster40f11bd7PostConfirmation": {
+          "GROUP": "GoogleUser",
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/digitaltoastmaster40f11bd7PostConfirmation-554242667953312b637a-build.zip"
+        },
+        "S3Trigger9cca7dfa": {
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/S3Trigger9cca7dfa-536736372f684f643253-build.zip"
+        }
+      },
       "auth": {
-        "myapp385ff9f7": {}
+        "digitaltoastmaster40f11bd7": {}
       }
     }
   }
