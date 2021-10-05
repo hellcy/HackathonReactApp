@@ -1,0 +1,69 @@
+{
+    "paths": [
+        {
+            "name": "/addComment",
+            "lambdaFunction": "addCommentToDynamoDB",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/addComment"
+        },
+        {
+            "name": "/getSpeechAnalysis",
+            "lambdaFunction": "getSpeechAnalysisFromDynamoDB",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/getSpeechAnalysis"
+        }
+    ],
+    "resourceName": "digitalToastmasterFrontendAPI",
+    "apiName": "digitalToastmasterFrontendAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "addCommentToDynamoDB"
+        },
+        {
+            "lambdaFunction": "getSpeechAnalysisFromDynamoDB"
+        }
+    ],
+    "privacy": {
+        "auth": 2,
+        "unauth": 0,
+        "authRoleName": "amplify-digitaltoastmaster-dev-140929-authRole",
+        "unAuthRoleName": "amplify-digitaltoastmaster-dev-140929-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "addCommentToDynamoDB",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "getSpeechAnalysisFromDynamoDB",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "f9338d74"
+}

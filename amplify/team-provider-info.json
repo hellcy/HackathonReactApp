@@ -21,6 +21,14 @@
         "S3Trigger9cca7dfa": {
           "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
           "s3Key": "amplify-builds/S3Trigger9cca7dfa-536736372f684f643253-build.zip"
+        },
+        "addCommentToDynamoDB": {
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/addCommentToDynamoDB-426671485a30384c747a-build.zip"
+        },
+        "getSpeechAnalysisFromDynamoDB": {
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/getSpeechAnalysisFromDynamoDB-36697046763764716245-build.zip"
         }
       },
       "auth": {

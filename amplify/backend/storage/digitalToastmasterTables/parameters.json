@@ -1,0 +1,7 @@
+{
+    "tableName": "digitalToastmasterComments",
+    "partitionKeyName": "fileid",
+    "partitionKeyType": "S",
+    "sortKeyName": "timestamp",
+    "sortKeyType": "S"
+}

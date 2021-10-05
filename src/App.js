@@ -48,7 +48,7 @@ function App() {
                     expand="md"
                     className="mb-3"
                 >
-                    <LinkContainer to="/">
+                    <LinkContainer to="/main">
                         <Navbar.Brand className="font-weight-bold text-muted">
                             Digital Toastmaster
                         </Navbar.Brand>
