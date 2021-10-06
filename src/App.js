@@ -8,79 +8,84 @@ import { AppContext } from './lib/contextLib'
 import { Auth } from 'aws-amplify'
 import { useHistory } from 'react-router-dom'
 import { onError } from './lib/errorLib'
+import background from './images/ToastDojoLogos.jpeg'
 
 function App() {
-    const history = useHistory()
-    const [isAuthenticated, userHasAuthenticated] = useState(false)
-    const [isAuthenticating, setIsAuthenticating] = useState(true)
+  const history = useHistory()
+  const [isAuthenticated, userHasAuthenticated] = useState(false)
+  const [isAuthenticating, setIsAuthenticating] = useState(true)
 
-    useEffect(() => {
-        onLoad()
-    }, [])
+  useEffect(() => {
+    onLoad()
+  }, [])
 
-    async function onLoad() {
-        try {
-            await Auth.currentSession()
-            userHasAuthenticated(true)
-        } catch (e) {
-            if (e !== 'No current user') {
-                onError(e)
-            }
-        }
-
-        setIsAuthenticating(false)
+  async function onLoad() {
+    try {
+      await Auth.currentSession()
+      userHasAuthenticated(true)
+    } catch (e) {
+      if (e !== 'No current user') {
+        onError(e)
+      }
     }
 
-    async function handleLogout() {
-        await Auth.signOut()
+    setIsAuthenticating(false)
+  }
 
-        userHasAuthenticated(false)
+  async function handleLogout() {
+    await Auth.signOut()
 
-        history.push('/login')
-    }
+    userHasAuthenticated(false)
 
-    return (
-        !isAuthenticating && (
-            <div className="App container py-3">
-                <Navbar
-                    collapseOnSelect
-                    bg="light"
-                    expand="md"
-                    className="mb-3"
-                >
-                    <LinkContainer to="/main">
-                        <Navbar.Brand className="font-weight-bold text-muted">
-                            Digital Toastmaster
-                        </Navbar.Brand>
+    history.push('/login')
+  }
+
+  return (
+    <div
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        width: '100%',
+        height: '100%',
+        minHeight: '100vh',
+      }}
+    >
+      {!isAuthenticating && (
+        <div className="App container py-3">
+          <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
+            <LinkContainer to="/main">
+              <Navbar.Brand className="font-weight-bold text-muted">
+                Toast Dojo
+              </Navbar.Brand>
+            </LinkContainer>
+            <Navbar.Toggle />
+            <Navbar.Collapse className="justify-content-end">
+              <Nav activeKey={window.location.pathname}>
+                {isAuthenticated ? (
+                  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                ) : (
+                  <>
+                    <LinkContainer to="/signup">
+                      <Nav.Link>Signup</Nav.Link>
                     </LinkContainer>
-                    <Navbar.Toggle />
-                    <Navbar.Collapse className="justify-content-end">
-                        <Nav activeKey={window.location.pathname}>
-                            {isAuthenticated ? (
-                                <Nav.Link onClick={handleLogout}>
-                                    Logout
-                                </Nav.Link>
-                            ) : (
-                                <>
-                                    <LinkContainer to="/signup">
-                                        <Nav.Link>Signup</Nav.Link>
-                                    </LinkContainer>
-                                    <LinkContainer to="/login">
-                                        <Nav.Link>Login</Nav.Link>
-                                    </LinkContainer>
-                                </>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-                <AppContext.Provider
-                    value={{ isAuthenticated, userHasAuthenticated }}
-                >
-                    <Routes />
-                </AppContext.Provider>
-            </div>
-        )
-    )
+                    <LinkContainer to="/login">
+                      <Nav.Link>Login</Nav.Link>
+                    </LinkContainer>
+                  </>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+          <AppContext.Provider
+            value={{ isAuthenticated, userHasAuthenticated }}
+          >
+            <Routes />
+          </AppContext.Provider>
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default App

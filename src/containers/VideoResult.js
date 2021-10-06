@@ -9,17 +9,21 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import './VideoResult.css'
-import Button from '@mui/material/Button'
+import LoaderButton from '../components/LoaderButton'
 import ListItemButton from '@mui/material/ListItemButton'
 import Chart from 'react-apexcharts'
 import Grid from '@mui/material/Grid'
 import CommentApp from './CommentApp'
 import { API } from 'aws-amplify'
+import CircularProgress from '@mui/material/CircularProgress'
+import Box from '@mui/material/Box'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 export default function VideoList(props) {
   const { filename } = props
   const [speechAnalysis, setSpeechAnalysis] = useState(null)
-  const [speechAnalysisChart, setSpeechAnalysisChart] = useState(null)
+  const [speechAnalysisIntensityChart, setSpeechAnalysisIntensityChart] =
+    useState(null)
   const history = useHistory()
 
   useEffect(() => {
@@ -38,25 +42,47 @@ export default function VideoList(props) {
           setSpeechAnalysis(response.Item)
           const intensityValue = []
           const intensityTimestamp = []
+          const pitchValue = []
+          const pitchTimestamp = []
+          const minLength = Math.min(
+            response.Item.intensity_timeseries.length,
+            response.Item.pitch_timeseries.length
+          )
+          console.log(minLength)
           response.Item.intensity_timeseries.forEach((array, index) => {
-            if (index % 100 === 0) {
+            if (index % 100 === 0 && index < minLength) {
               intensityValue.push(array[1])
               intensityTimestamp.push(array[0])
             }
           })
-          setSpeechAnalysisChart({
+          response.Item.pitch_timeseries.forEach((array, index) => {
+            if (index % 100 === 0 && index < minLength) {
+              pitchValue.push(array[1])
+              pitchTimestamp.push(array[0])
+            }
+          })
+          setSpeechAnalysisIntensityChart({
             series: [
               {
                 name: 'Intensity',
                 data: intensityValue,
               },
+              {
+                name: 'Pitch',
+                data: pitchValue,
+              },
             ],
+            chart: {
+              group: 'speechAnalysis',
+              type: 'line',
+              stacked: false,
+            },
             options: {
               chart: {
                 toolbar: {
                   show: false,
                 },
-                type: 'bar',
+                type: 'line',
                 height: 430,
               },
               plotOptions: {
@@ -80,8 +106,8 @@ export default function VideoList(props) {
               },
               stroke: {
                 show: true,
-                width: 3,
-                colors: ['#0394fc'],
+                width: 2,
+                colors: ['#0394fc', '#f54242'],
               },
               tooltip: {
                 shared: true,
@@ -90,14 +116,53 @@ export default function VideoList(props) {
               xaxis: {
                 categories: intensityTimestamp,
               },
-              yaxis: {
-                labels: {
-                  formatter(val) {
-                    return val.toFixed(1)
+              yaxis: [
+                {
+                  axisTicks: {
+                    show: true,
+                  },
+                  axisBorder: {
+                    show: true,
+                    color: '#0394fc',
+                  },
+                  labels: {
+                    style: {
+                      colors: '#0394fc',
+                    },
+                  },
+                  title: {
+                    text: 'Intensity',
+                    style: {
+                      color: '#0394fc',
+                    },
                   },
                 },
+                {
+                  opposite: true,
+                  axisTicks: {
+                    show: true,
+                  },
+                  axisBorder: {
+                    show: true,
+                    color: '#f54242',
+                  },
+                  labels: {
+                    style: {
+                      colors: '#f54242',
+                    },
+                  },
+                  title: {
+                    text: 'Pitch',
+                    style: {
+                      color: '#f54242',
+                    },
+                  },
+                },
+              ],
+              colors: ['#0394fc', '#f54242'],
+              title: {
+                text: filename,
               },
-              colors: ['#0394fc'],
             },
           })
         })
@@ -108,21 +173,37 @@ export default function VideoList(props) {
     getSpeechAnalysis()
   }, [])
 
+  function handleBack() {
+    history.push('/videoList')
+  }
+
   return (
-    <>
+    <div className="wrapper">
       <Grid>
-        {speechAnalysisChart && (
-          <Chart
-            options={speechAnalysisChart.options}
-            series={speechAnalysisChart.series}
-            type="line"
-            width="100%"
-          />
+        <LoaderButton className="comment-field-button" onClick={handleBack}>
+          <ArrowBackIcon />
+          Back
+        </LoaderButton>{' '}
+      </Grid>
+      <Grid>
+        {speechAnalysisIntensityChart ? (
+          <>
+            <Chart
+              options={speechAnalysisIntensityChart.options}
+              series={speechAnalysisIntensityChart.series}
+              type="line"
+              width="100%"
+            />
+          </>
+        ) : (
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </Box>
         )}
       </Grid>
       <Grid>
         <CommentApp filename={filename} />
       </Grid>
-    </>
+    </div>
   )
 }

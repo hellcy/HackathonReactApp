@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography'
 import './VideoList.css'
 import Button from '@mui/material/Button'
 import ListItemButton from '@mui/material/ListItemButton'
+import Grid from '@mui/material/Grid'
+import LoaderButton from '../components/LoaderButton'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 export default function VideoList() {
   const history = useHistory()
@@ -33,12 +36,21 @@ export default function VideoList() {
     history.push('/videoResult?filename=' + video.key)
   }
 
+  function handleBack() {
+    history.push('/main')
+  }
+
   return (
     <>
+      <Grid>
+        <LoaderButton className="comment-field-button" onClick={handleBack}>
+          <ArrowBackIcon />
+          Back
+        </LoaderButton>{' '}
+      </Grid>
       <List
         sx={{
           width: '100%',
-          maxWidth: 760,
           bgcolor: 'background.paper',
         }}
       >

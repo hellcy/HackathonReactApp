@@ -25,6 +25,7 @@ import LinearProgress from '@mui/material/LinearProgress'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
 export default function Main() {
   const history = useHistory()
@@ -288,7 +289,7 @@ export default function Main() {
   }
 
   return (
-    <div className="Main" style={{ backgroundColor: '#c9c9c9' }}>
+    <div className="Main" style={{ backgroundColor: '#dbdbdb' }}>
       <div className="lander">
         <Grid container spacing={2}>
           <Grid item xs={4}>
@@ -349,7 +350,7 @@ export default function Main() {
                   disabled={isUploading}
                   onClick={() => onSubmit()}
                 >
-                  Upload
+                  <CloudUploadIcon style={{ marginRight: '10px' }} /> Upload
                 </Button>
                 {isUploading && (
                   <CircularProgress

@@ -6,6 +6,7 @@ import LoaderButton from '../components/LoaderButton'
 import { API } from 'aws-amplify'
 import uuid from 'react-uuid'
 import moment from 'moment'
+import AddCommentIcon from '@mui/icons-material/AddComment'
 
 export default function CommentInput(props) {
   const { handleNewComment, userInfo, filename } = props
@@ -71,6 +72,7 @@ export default function CommentInput(props) {
           variant="success"
           isLoading={isLoading}
         >
+          <AddCommentIcon style={{ marginRight: '5px' }} />
           Comment
         </LoaderButton>
       </Form>
