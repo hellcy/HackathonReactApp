@@ -29,6 +29,21 @@
                 ]
             },
             "policyResourceName": "/getSpeechAnalysis"
+        },
+        {
+            "name": "/getGrammar",
+            "lambdaFunction": "getGrammarFromDynamoDB",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/getGrammar"
         }
     ],
     "resourceName": "digitalToastmasterFrontendAPI",
@@ -39,10 +54,13 @@
         },
         {
             "lambdaFunction": "getSpeechAnalysisFromDynamoDB"
+        },
+        {
+            "lambdaFunction": "getGrammarFromDynamoDB"
         }
     ],
     "privacy": {
-        "auth": 2,
+        "auth": 3,
         "unauth": 0,
         "authRoleName": "amplify-digitaltoastmaster-dev-140929-authRole",
         "unAuthRoleName": "amplify-digitaltoastmaster-dev-140929-unauthRole"
@@ -63,7 +81,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "getGrammarFromDynamoDB",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "f9338d74"
+    "uuid": "ffa04373"
 }

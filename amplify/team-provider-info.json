@@ -29,6 +29,10 @@
         "getSpeechAnalysisFromDynamoDB": {
           "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
           "s3Key": "amplify-builds/getSpeechAnalysisFromDynamoDB-36697046763764716245-build.zip"
+        },
+        "getGrammarFromDynamoDB": {
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/getGrammarFromDynamoDB-782f492b7663422b6973-build.zip"
         }
       },
       "auth": {

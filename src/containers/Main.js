@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Main.css'
-import { Storage } from 'aws-amplify'
+import { Storage, API } from 'aws-amplify'
 import { BsPencilSquare } from 'react-icons/bs'
 import { LinkContainer } from 'react-router-bootstrap'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -26,11 +26,20 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
 
 export default function Main() {
   const history = useHistory()
   const [files, setFiles] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [grammarList, setGrammarList] = useState([])
+  const [fillerWordsList, setFillerWordsList] = useState([])
   const useStyles = makeStyles((theme) => ({
     card: {
       display: 'flex',
@@ -39,7 +48,7 @@ export default function Main() {
       marginBottom: '20px',
       marginLeft: '30px',
       width: '300px',
-      height: '240px',
+      height: '260px',
     },
     content: {
       height: '100%',
@@ -59,6 +68,29 @@ export default function Main() {
   })
 
   const classes = useStyles()
+
+  useEffect(() => {
+    async function getGrammar() {
+      const grammarResponse = await API.get(
+        'digitalToastmasterFrontendAPI',
+        '/getGrammar',
+        {
+          queryStringParameters: {
+            fileid: 'processed-transcripts/MLK.HourOfPower.json.txt',
+          },
+        }
+      )
+        .then((response) => {
+          setGrammarList(response.Item.corrections)
+          setFillerWordsList(response.Item['filler-words'])
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+    }
+
+    getGrammar()
+  }, [])
 
   const [chartState, setChartState] = useState({
     series: [
@@ -114,102 +146,6 @@ export default function Main() {
         },
       },
       colors: ['#0394fc'],
-    },
-  })
-
-  const [charttestState, setCharttestState] = useState({
-    series: [
-      {
-        name: 'Bob',
-        data: [
-          {
-            x: 'Design',
-            y: [
-              new Date('2019-03-05').getTime(),
-              new Date('2019-03-08').getTime(),
-            ],
-          },
-          {
-            x: 'Code',
-            y: [
-              new Date('2019-03-08').getTime(),
-              new Date('2019-03-11').getTime(),
-            ],
-          },
-          {
-            x: 'Test',
-            y: [
-              new Date('2019-03-11').getTime(),
-              new Date('2019-03-16').getTime(),
-            ],
-          },
-        ],
-      },
-      {
-        name: 'Joe',
-        data: [
-          {
-            x: 'Design',
-            y: [
-              new Date('2019-03-02').getTime(),
-              new Date('2019-03-05').getTime(),
-            ],
-          },
-          {
-            x: 'Code',
-            y: [
-              new Date('2019-03-06').getTime(),
-              new Date('2019-03-09').getTime(),
-            ],
-          },
-          {
-            x: 'Test',
-            y: [
-              new Date('2019-03-10').getTime(),
-              new Date('2019-03-19').getTime(),
-            ],
-          },
-        ],
-      },
-    ],
-    options: {
-      chart: {
-        height: 350,
-        type: 'rangeBar',
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val) {
-          var a = moment(val[0])
-          var b = moment(val[1])
-          var diff = b.diff(a, 'days')
-          return diff + (diff > 1 ? ' days' : ' day')
-        },
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'light',
-          type: 'vertical',
-          shadeIntensity: 0.25,
-          gradientToColors: undefined,
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [50, 0, 100, 100],
-        },
-      },
-      xaxis: {
-        type: 'datetime',
-      },
-      legend: {
-        position: 'top',
-      },
     },
   })
 
@@ -294,16 +230,20 @@ export default function Main() {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <Card sx={{ maxWidth: 400 }} className={classes.card}>
-              <Avatar alt="user avatar" src={practitionerIcon} />
+              <Avatar
+                alt="user avatar"
+                src={practitionerIcon}
+                sx={{ width: 100, height: 100 }}
+              />
               <CardContent>
                 <Typography
                   sx={{ fontSize: 20 }}
                   color="text.secondary"
                   gutterBottom
                 >
-                  David Kang
+                  Yuan Cheng
                 </Typography>
-                <Typography variant="body2">Some description</Typography>
+                <Typography variant="body2">Practitioner</Typography>
               </CardContent>
               <CardActions>
                 <Button size="small">Share</Button>
@@ -321,7 +261,9 @@ export default function Main() {
                 >
                   Records and Assesses
                 </Typography>
-                <Typography variant="body2">Some description</Typography>
+                <Typography variant="body2">
+                  You can upload new Audio or Video files here
+                </Typography>
               </CardContent>
               <CardActions>
                 <label htmlFor="contained-button-file">
@@ -381,9 +323,13 @@ export default function Main() {
                   color="text.secondary"
                   gutterBottom
                 >
-                  Review Elevator Pitch
+                  Filler words detected
                 </Typography>
-                <Typography variant="body2">Some description</Typography>
+                <Typography variant="body2">
+                  {fillerWordsList.length === 0
+                    ? `You don't have any filler words, congratulations!`
+                    : 'test'}
+                </Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -406,18 +352,62 @@ export default function Main() {
               <CardContent>
                 <div className={classes.content}>
                   <div className={classes.chartWrapper}>
-                    {/* <Chart
-                      options={chartState.options}
-                      series={chartState.series}
-                      type="line"
-                      width="500"
-                    /> */}
-                    <Chart
-                      options={charttestState.options}
-                      series={charttestState.series}
-                      type="rangeBar"
-                      width="500"
-                    />
+                    {grammarList && (
+                      <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 500 }} aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell style={{ fontWeight: 'bold' }}>
+                                Timestamp
+                              </TableCell>
+                              <TableCell
+                                align="right"
+                                style={{ fontWeight: 'bold' }}
+                              >
+                                Definition
+                              </TableCell>
+                              <TableCell
+                                align="right"
+                                style={{ fontWeight: 'bold' }}
+                              >
+                                Correct
+                              </TableCell>
+                              <TableCell
+                                align="right"
+                                style={{ fontWeight: 'bold' }}
+                              >
+                                Text
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {grammarList.map((grammar) => (
+                              <TableRow
+                                key={grammar.setCharttestState}
+                                sx={{
+                                  '&:last-child td, &:last-child th': {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <TableCell component="th" scope="row">
+                                  {grammar.start}
+                                </TableCell>
+                                <TableCell align="right">
+                                  {grammar.definition}
+                                </TableCell>
+                                <TableCell align="right">
+                                  {grammar.correct}
+                                </TableCell>
+                                <TableCell align="right">
+                                  {grammar.text}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    )}
                   </div>
                 </div>
               </CardContent>

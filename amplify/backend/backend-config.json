@@ -53,6 +53,22 @@
           ]
         }
       ]
+    },
+    "getGrammarFromDynamoDB": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "digitalToastmasterTables",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -128,6 +144,14 @@
         {
           "category": "function",
           "resourceName": "getSpeechAnalysisFromDynamoDB",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "getGrammarFromDynamoDB",
           "attributes": [
             "Name",
             "Arn"

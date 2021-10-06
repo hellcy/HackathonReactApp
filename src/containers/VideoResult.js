@@ -115,6 +115,10 @@ export default function VideoList(props) {
               },
               xaxis: {
                 categories: intensityTimestamp,
+                tickAmount: 10,
+                title: {
+                  text: 'Seconds',
+                },
               },
               yaxis: [
                 {
@@ -162,6 +166,13 @@ export default function VideoList(props) {
               colors: ['#0394fc', '#f54242'],
               title: {
                 text: filename,
+              },
+              legend: {
+                position: 'top',
+                horizontalAlign: 'center',
+                floating: true,
+                offsetY: -25,
+                offsetX: -5,
               },
             },
           })

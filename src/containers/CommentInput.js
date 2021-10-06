@@ -17,6 +17,10 @@ export default function CommentInput(props) {
   const [isLoading, setIsLoading] = useState(false)
 
   async function handleCommentSubmit(event) {
+    if (fields.comment === '') {
+      console.log('nothing to comment')
+      return
+    }
     event.preventDefault()
 
     setIsLoading(true)
@@ -59,6 +63,7 @@ export default function CommentInput(props) {
         <Form.Group controlId="comment" size="lg">
           <Form.Label>Content:</Form.Label>
           <Form.Control
+            required
             autoFocus
             type="tel"
             onChange={handleFieldChange}

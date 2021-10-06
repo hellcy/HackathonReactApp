@@ -21,7 +21,7 @@ export default function Routes() {
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <Login />
       </Route>
       <UnauthenticatedRoute exact path="/login">
         <Login />

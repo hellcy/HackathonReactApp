@@ -8,7 +8,8 @@ import { AppContext } from './lib/contextLib'
 import { Auth } from 'aws-amplify'
 import { useHistory } from 'react-router-dom'
 import { onError } from './lib/errorLib'
-import background from './images/ToastDojoLogos.jpeg'
+import logoBlack from './images/ToastDojo-logos_black.png'
+import Avatar from '@mui/material/Avatar'
 
 function App() {
   const history = useHistory()
@@ -43,7 +44,7 @@ function App() {
   return (
     <div
       style={{
-        backgroundImage: `url(${background})`,
+        backgroundColor: '#ededed',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         width: '100%',
@@ -54,6 +55,11 @@ function App() {
       {!isAuthenticating && (
         <div className="App container py-3">
           <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
+            <Avatar
+              alt="user avatar"
+              src={logoBlack}
+              sx={{ width: 60, height: 60 }}
+            />{' '}
             <LinkContainer to="/main">
               <Navbar.Brand className="font-weight-bold text-muted">
                 Toast Dojo

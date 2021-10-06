@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "storage": {
+      "digitalToastmasterTables": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
