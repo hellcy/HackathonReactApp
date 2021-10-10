@@ -90,7 +90,7 @@ export default function Signup() {
       <>
         <div className="d-flex justify-content-center">
           <div className="p-2 col-example text-left">
-            <Card sx={{ maxWidth: 275 }}>
+            <Card sx={{ width: 250 }}>
               <CardActionArea
                 onClick={() => handleUserTypeSelection('Practitioner')}
               >
@@ -106,9 +106,11 @@ export default function Signup() {
                     color="text.secondary"
                     gutterBottom
                   >
-                    Practitioner
+                    Student
                   </Typography>
-                  <Typography variant="body2">Some description</Typography>
+                  <Typography variant="body2">
+                    For the student learning to way of speech
+                  </Typography>
                 </CardContent>
               </CardActionArea>
               <CardActions>
@@ -122,7 +124,7 @@ export default function Signup() {
             </Card>
           </div>
           <div className="p-2 col-example text-left">
-            <Card sx={{ maxWidth: 275 }}>
+            <Card sx={{ width: 250 }}>
               <CardActionArea
                 onClick={() => handleUserTypeSelection('Assessor')}
               >
@@ -138,9 +140,11 @@ export default function Signup() {
                     color="text.secondary"
                     gutterBottom
                   >
-                    Assessor
+                    Sensei
                   </Typography>
-                  <Typography variant="body2">Some description</Typography>
+                  <Typography variant="body2">
+                    For the sensei guiding the student
+                  </Typography>
                 </CardContent>
               </CardActionArea>
               <CardActions>

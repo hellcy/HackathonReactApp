@@ -44,6 +44,51 @@
                 ]
             },
             "policyResourceName": "/getGrammar"
+        },
+        {
+            "name": "/getGaze",
+            "lambdaFunction": "getGazeFromDynamoDB",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/getGaze"
+        },
+        {
+            "name": "/getSentiment",
+            "lambdaFunction": "getSentimentFromDynamoDB",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/getSentiment"
+        },
+        {
+            "name": "/getTranscribe",
+            "lambdaFunction": "getTranscribeDataFromDynamoDB",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/getTranscribe"
         }
     ],
     "resourceName": "digitalToastmasterFrontendAPI",
@@ -57,10 +102,19 @@
         },
         {
             "lambdaFunction": "getGrammarFromDynamoDB"
+        },
+        {
+            "lambdaFunction": "getGazeFromDynamoDB"
+        },
+        {
+            "lambdaFunction": "getSentimentFromDynamoDB"
+        },
+        {
+            "lambdaFunction": "getTranscribeDataFromDynamoDB"
         }
     ],
     "privacy": {
-        "auth": 3,
+        "auth": 6,
         "unauth": 0,
         "authRoleName": "amplify-digitaltoastmaster-dev-140929-authRole",
         "unAuthRoleName": "amplify-digitaltoastmaster-dev-140929-unauthRole"
@@ -89,7 +143,31 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "getGazeFromDynamoDB",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "getSentimentFromDynamoDB",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "getTranscribeDataFromDynamoDB",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "ffa04373"
+    "uuid": "fc4cbbc8"
 }

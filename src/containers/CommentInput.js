@@ -39,7 +39,7 @@ export default function CommentInput(props) {
           id: uuid(),
           userid: userInfo.username,
           username: userInfo.attributes.email,
-          usertype: 'Practitioner',
+          usertype: 'Student',
           comment: fields.comment,
           fileid: filename,
           timestamp: CurrentDate,

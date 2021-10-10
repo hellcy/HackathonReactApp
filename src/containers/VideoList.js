@@ -24,7 +24,7 @@ export default function VideoList() {
   }, [])
 
   function getVideoListForUser() {
-    Storage.list('', { level: 'private' })
+    Storage.list('', { level: 'public' })
       .then((result) => {
         console.log(result)
         setVideoList(result)

@@ -33,6 +33,18 @@
         "getGrammarFromDynamoDB": {
           "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
           "s3Key": "amplify-builds/getGrammarFromDynamoDB-782f492b7663422b6973-build.zip"
+        },
+        "getGazeFromDynamoDB": {
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/getGazeFromDynamoDB-7a5a676b373578386a58-build.zip"
+        },
+        "getSentimentFromDynamoDB": {
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/getSentimentFromDynamoDB-6f394c4870534a464a79-build.zip"
+        },
+        "getTranscribeDataFromDynamoDB": {
+          "deploymentBucketName": "amplify-digitaltoastmaster-dev-140929-deployment",
+          "s3Key": "amplify-builds/getTranscribeDataFromDynamoDB-676e70304e774942694f-build.zip"
         }
       },
       "auth": {

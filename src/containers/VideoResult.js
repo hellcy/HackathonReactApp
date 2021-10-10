@@ -33,7 +33,7 @@ export default function VideoList(props) {
         '/getSpeechAnalysis',
         {
           queryStringParameters: {
-            fileid: 'wav//test.wav',
+            fileid: 'demo-2',
           },
         }
       )
@@ -115,6 +115,7 @@ export default function VideoList(props) {
               },
               xaxis: {
                 categories: intensityTimestamp,
+                tickPlacement: 'on',
                 tickAmount: 10,
                 title: {
                   text: 'Seconds',
@@ -166,9 +167,10 @@ export default function VideoList(props) {
               colors: ['#0394fc', '#f54242'],
               title: {
                 text: filename,
+                align: 'center',
               },
               legend: {
-                position: 'top',
+                position: 'bottom',
                 horizontalAlign: 'center',
                 floating: true,
                 offsetY: -25,
